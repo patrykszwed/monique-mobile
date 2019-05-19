@@ -11,25 +11,25 @@ import {
   TextInput,
   View,
   AppRegistry,
-  Button
+  Button,
+  Modal,
+  TouchableHighlight,
+  Alert
 } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import Tts from "react-native-tts";
 
-export default class TextComponent extends React.Component {
+export default class OptionsComponent extends React.Component {
   constructor(props) {
     super(props);
-    let icon = this.props.icon;
     this.state = {
-      text: "",
+      name: "",
       isMicPressed: false,
-      icon: icon
+      modalVisible: false
     };
     this.onSave = this.onSave.bind(this);
     this.onBack = this.onBack.bind(this);
-    this.onMicPressed = this.onMicPressed.bind(this);
-
-    console.log("icon = " + icon);
+    this.onInfoPress = this.onInfoPress.bind(this);
   }
 
   onSave() {
@@ -42,11 +42,14 @@ export default class TextComponent extends React.Component {
     console.log("Back");
   }
 
-  onMicPressed() {
-    console.log("onMicPressed()");
-    console.log("We should add speech algorithms here");
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  onInfoPress(visible) {
+    console.log("Info");
     this.setState({
-      isMicPressed: !this.state.isMicPressed
+      modalVisible: visible
     });
   }
 
@@ -57,19 +60,56 @@ export default class TextComponent extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         />
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalVisible);
+          }}
+        >
+          <View style={styles.container}>
+            <ScrollView
+              style={styles.container}
+              contentContainerStyle={styles.contentContainer}
+            />
+            <Logo />
+            <View>
+              <Text style={styles.textInfoMain}>Authors:</Text>
+              <Text style={styles.textInfo}>
+                Patryk Szwed
+                {"\n"} Igor Pogorzała
+                {"\n"} Aleksander Wawrzyniak
+              </Text>
+
+              <Text style={styles.textInfoMain}>Contact:</Text>
+              <Text style={styles.textInfo}>
+                E-mail: example@gmail.com
+                {"\n"} Webpage: www.mypage.com/contact
+              </Text>
+
+              <Button
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+                title="Back"
+                color="#841584"
+                accessibilityLabel="Go back"
+                style={styles.backButton}
+              />
+            </View>
+            <ScrollView />
+          </View>
+        </Modal>
+
+        <Text style={styles.textInfoMain}>Your name</Text>
+
         <TextInput
-          onChangeText={text => this.setState({ text })}
-          value={this.state.text}
-          placeholder={
-            this.state.icon === "textToSpeech"
-              ? "Use a speaker button to read your text aloud"
-              : "Use a microphone button and a text will appear here"
-          }
-          multiline={true}
-          textAlignVertical="top"
-          editable={this.state.icon === "textToSpeech" ? true : false}
+          onChangeText={name => this.setState({ name })}
+          value={this.state.name}
           style={styles.inputText}
         />
+
         <View style={styles.buttonsContainer}>
           <Button
             onPress={this.onBack}
@@ -78,18 +118,14 @@ export default class TextComponent extends React.Component {
             accessibilityLabel="Go back"
           />
 
-          <TouchableOpacity onPress={this.onMicPressed}>
+          <TouchableOpacity
+            onPress={() => {
+              this.onInfoPress(true);
+            }}
+          >
             <View>
               <Image
-                source={
-                  this.state.icon === "textToSpeech"
-                    ? this.state.isMicPressed
-                      ? require("../assets/images/mutedSpeaker.png")
-                      : require("../assets/images/speaker.png")
-                    : this.state.isMicPressed
-                    ? require("../assets/images/muted.png")
-                    : require("../assets/images/microphone.png")
-                }
+                source={require("../assets/images/info.png")}
                 style={styles.mainImage}
               />
             </View>
@@ -100,7 +136,7 @@ export default class TextComponent extends React.Component {
             title="Save"
             color="#841584"
             accessibilityLabel="Save changes"
-            disabled={this.state.text.length > 0 ? false : true}
+            disabled={this.state.name.length > 0 ? false : true}
           />
         </View>
       </View>
@@ -122,6 +158,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     justifyContent: "space-around"
   },
+  backButton: {
+    marginTop: 30
+  },
   developmentModeText: {
     marginBottom: 20,
     color: "rgba(0,0,0,0.4)",
@@ -132,6 +171,21 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30
+  },
+  textInfoMain: {
+    fontSize: 22,
+    color: "rgba(96,100,109, 1)",
+    textAlign: "center",
+    color: "#000",
+    fontWeight: "bold",
+    margin: 15
+  },
+  textInfo: {
+    fontSize: 14,
+    color: "rgba(96,100,109, 1)",
+    textAlign: "center",
+    color: "#000",
+    padding: 10
   },
   welcomeContainer: {
     alignItems: "center",
@@ -216,7 +270,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginLeft: 10,
     marginRight: 10,
-    height: 200,
+    height: 50,
     borderRadius: 20,
     padding: 10
   }

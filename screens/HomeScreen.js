@@ -7,7 +7,8 @@ import {
   Text,
   Linking,
   TouchableOpacity,
-  View
+  View,
+  AppRegistry
 } from "react-native";
 import { WebBrowser } from "expo";
 import { createStackNavigator, createAppContainer } from "react-navigation";
@@ -29,6 +30,8 @@ export default class HomeScreen extends React.Component {
       Text: { screen: TextScreen },
       Settings: { screen: SettingsScreen }
     });
+
+    AppRegistry.registerComponent("MainNavigator", () => MainNavigator);
 
     const { navigate } = this.props.navigation;
     return (
