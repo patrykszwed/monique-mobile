@@ -21,6 +21,9 @@ export default class SettingsScreen extends React.Component {
   };
 
   render() {
+
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <ScrollView
@@ -28,7 +31,7 @@ export default class SettingsScreen extends React.Component {
           contentContainerStyle={styles.contentContainer}
         >
           <Logo />
-          <OptionsComponent />
+          <OptionsComponent handleBackPress={() => navigate("Home")} />
         </ScrollView>
       </View>
     );
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "rgba(96,100,109, 1)",
     textAlign: "center",
-    color: "#000",
+    // color: "#000",
     fontWeight: "bold"
   },
   navigationFilename: {
