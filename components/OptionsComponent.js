@@ -137,7 +137,7 @@ export default class OptionsComponent extends React.Component {
             title="Save"
             color="#841584"
             accessibilityLabel="Save changes"
-            disabled={this.state.name.length > 0 ? false : true}
+            disabled={this.state.name.length <= 0}
           />
         </View>
       </View>

@@ -68,7 +68,7 @@ export default class TextComponent extends React.Component {
           }
           multiline={true}
           textAlignVertical="top"
-          editable={this.state.icon === "textToSpeech" ? true : false}
+          editable={this.state.icon === "textToSpeech"}
           style={styles.inputText}
         />
         <View style={styles.buttonsContainer}>
