@@ -38,6 +38,7 @@ export default class SettingsScreen extends React.Component {
   }
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
