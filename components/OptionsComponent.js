@@ -40,6 +40,7 @@ export default class OptionsComponent extends React.Component {
   onBack() {
     // Tts.speak("Hello, world!");
     console.log("Back");
+    this.props.handleBackPress();
   }
 
   setModalVisible(visible) {
@@ -136,7 +137,7 @@ export default class OptionsComponent extends React.Component {
             title="Save"
             color="#841584"
             accessibilityLabel="Save changes"
-            disabled={this.state.name.length > 0 ? false : true}
+            disabled={this.state.name.length <= 0}
           />
         </View>
       </View>
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "rgba(96,100,109, 1)",
     textAlign: "center",
-    color: "#000",
+    // color: "#000",
     fontWeight: "bold",
     margin: 15
   },
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "rgba(96,100,109, 1)",
     textAlign: "center",
-    color: "#000",
+    // color: "#000",
     padding: 10
   },
   welcomeContainer: {

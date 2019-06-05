@@ -40,6 +40,7 @@ export default class TextComponent extends React.Component {
   onBack() {
     // Tts.speak("Hello, world!");
     console.log("Back");
+    this.props.handleBackPress();
   }
 
   onMicPressed() {
@@ -67,7 +68,7 @@ export default class TextComponent extends React.Component {
           }
           multiline={true}
           textAlignVertical="top"
-          editable={this.state.icon === "textToSpeech" ? true : false}
+          editable={this.state.icon === "textToSpeech"}
           style={styles.inputText}
         />
         <View style={styles.buttonsContainer}>
@@ -100,13 +101,14 @@ export default class TextComponent extends React.Component {
             title="Save"
             color="#841584"
             accessibilityLabel="Save changes"
-            disabled={this.state.text.length > 0 ? false : true}
+            disabled={this.state.text.length <= 0}
           />
         </View>
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

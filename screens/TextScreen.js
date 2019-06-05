@@ -20,6 +20,8 @@ export default class TextScreen extends React.Component {
   };
 
   render() {
+
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <ScrollView
@@ -28,7 +30,7 @@ export default class TextScreen extends React.Component {
         >
           <Logo />
           <Text style={styles.inputTextInfo}>Ready when you are</Text>
-          <TextComponent icon={"textToSpeech"} />
+          <TextComponent icon={"textToSpeech"} handleBackPress={() => navigate("Home")} />
         </ScrollView>
       </View>
     );
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
   },
   inputTextInfo: {
     fontSize: 22,
-    color: "rgba(96,100,109, 1)",
+    // color: "rgba(96,100,109, 1)",
     textAlign: "center",
     color: "#000",
     fontWeight: "bold"
